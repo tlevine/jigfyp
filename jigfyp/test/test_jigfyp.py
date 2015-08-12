@@ -24,9 +24,13 @@ def test_encode_keys_random(delimiter, highest_character, key_prefix):
     keys = _encode_keys(d, h, kp)
     assert set(keys) == {'key_from', 'key_to'}
     assert isinstance(keys, dict)
-    assert keys['key_from'].endswith(d)
-    assert keys['key_to'].endswith(d + h)
-    for name in ['key_from', 'key_to']:
-        assert keys[name].count(d) == len(key_prefix)
+    if len(key_prefix) == 0:
+        for name in ['key_from', 'key_to']:
+            assert keys[name] == None
+    else:
+        assert keys['key_from'].endswith(d)
+        assert keys['key_to'].endswith(d + h)
+        for name in ['key_from', 'key_to']:
+            assert keys[name].count(d) == len(key_prefix)
 
-    assert len(keys['key_from']) + 1 == len(keys['key_to'])
+        assert len(keys['key_from']) + 1 == len(keys['key_to'])
