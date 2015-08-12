@@ -17,7 +17,7 @@ def test_encode_keys_specific(key_prefix, keys):
                        key_prefix = list_of(str), ncalls = 3)
 def test_encode_keys_random(delimiter, highest_character, key_prefix):
     d = delimiter.encode('ascii')
-    h = highest_character.encode('ascii'),
+    h = highest_character.encode('ascii')
     keys = _encode_keys(d, h, tuple(x.encode('ascii') for x in key_prefix))
     assert set(keys) == {'key_from', 'key_to'}
     assert isinstance(keys, dict)
