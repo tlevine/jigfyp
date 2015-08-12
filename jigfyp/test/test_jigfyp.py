@@ -14,14 +14,19 @@ def test_encode_keys_specific(key_prefix, keys):
     assert _encode_keys(delimiter, highest_character, key_prefix) == keys
 
 @pytest.mark.randomize(delimiter = str, highest_character = str, 
-                       key_prefix = list_of(str), ncalls = 3)
+                       key_prefix = list_of(str),
+                       ncalls = 3, encoding = 'ascii')
 def test_encode_keys_random(delimiter, highest_character, key_prefix):
+    kp = tuple(x.replace(delimiter, '').replace(highest_character, '').encode('ascii') for x in key_prefix)
+
     d = delimiter.encode('ascii')
     h = highest_character.encode('ascii')
-    keys = _encode_keys(d, h, tuple(x.encode('ascii') for x in key_prefix))
+    keys = _encode_keys(d, h, kp)
     assert set(keys) == {'key_from', 'key_to'}
     assert isinstance(keys, dict)
     assert keys['key_from'].endswith(d)
     assert keys['key_to'].endswith(d + h)
     for name in ['key_from', 'key_to']:
         assert keys[name].count(d) == len(key_prefix)
+
+    assert len(keys['key_from']) + 1 == len(keys['key_to'])
