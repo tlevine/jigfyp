@@ -23,7 +23,10 @@ def test_encode_keys_random(delimiter, highest_character, key_prefix, validate):
 
     d = delimiter.encode('ascii')
     h = highest_character.encode('ascii')
-    if len(d) == 1 and len(h) == 1:
+    if validate and (len(d) != 1 or len(h) != 1):
+        with pytest.raises(ValueError):
+            _encode_keys(d, h, kp, validate = validate)
+    else:
         keys = _encode_keys(d, h, kp, validate = validate)
         assert set(keys) == {'key_from', 'key_to'}
         assert isinstance(keys, dict)
@@ -37,8 +40,3 @@ def test_encode_keys_random(delimiter, highest_character, key_prefix, validate):
                 assert keys[name].count(d) == len(key_prefix)
 
             assert len(keys['key_from']) + 1 == len(keys['key_to'])
-    elif validate:
-        with pytest.raises(ValueError):
-            _encode_keys(d, h, kp, validate = validate)
-    else:
-        1/0
