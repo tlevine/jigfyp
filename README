@@ -1,3 +1,4 @@
-jigfypdb lets you specify leveldb ranges as tuples of strings.
+Jigfyp is a query-builder for leveldb.
+It lets you specify leveldb ranges as tuples of strings.
 
 
