@@ -60,3 +60,15 @@ class Jigfypdb:
         :rtype: None
         :returns: Nothing
         '''
+
+def _encode_keys(delimiter, highest_character, key):
+    if len(key) > 0:
+        key_from = delimiter.join(key) + delimiter
+        key_to = key_from + highest_character
+    else:
+        key_from = key_to = None
+
+    return {
+        'key_from': key_from,
+        'key_to': key_to,
+    }
