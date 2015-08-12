@@ -2,8 +2,10 @@ class Jigfyp:
     def __init__(self, db, delimiter = b'!', highest_character = b'~'):
         self.db = db
         for name in ['delimiter', 'highest_character']:
-            if not isinstance(name, bytes):
+            if not isinstance(locals()[name], bytes):
                 raise TypeError('%s must be bytes.' % name)
+            elif len(locals()[name]) != 1:
+                raise ValueError('%s must have length 1.' % name)
             setattr(self, name, locals()[name])
 
     def put(db, key, value):
@@ -62,23 +64,8 @@ class Jigfyp:
         '''
 
 def _encode_keys(delimiter, highest_character, key, validate = False):
-    if validate:
-        if len(delimiter) != 1 or len(highest_character) != 1:
-            raise ValueError('delimiter and highest_character must both have length 1.')
-        def f():
-            for x in key:
-                if delimiter in x:
-                    raise ValueError('%s contains the delimiter (%s)' % (repr(key), repr(delimiter)))
-                elif highest_character in x:
-                    raise ValueError('%s contains the highest_character (%s)' % (repr(key), repr(highest_character)))
-                else:
-                    yield x
-        _key = f()
-    else:
-        _key = key
-
     if len(key) > 0:
-        key_from = delimiter.join(_key) + delimiter
+        key_from = delimiter.join(key) + delimiter
         key_to = key_from + highest_character
     else:
         key_from = key_to = None
