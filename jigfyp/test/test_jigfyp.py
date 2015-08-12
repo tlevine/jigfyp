@@ -15,12 +15,14 @@ def test_encode_keys_specific(key_prefix, keys):
     highest_character = b'~'
     assert _encode_keys(delimiter, highest_character, key_prefix) == keys
 
-@pytest.mark.parametrize('delimiter, highest_character', product(b'!,', b'~0'))
+@pytest.mark.parametrize('delimiter, highest_character', product('!,', '~0'))
 @pytest.mark.randomize(min_num = 0, max_num = 1,
                        max_length = 5, # So errors are easy to read
                        ncalls = 3, encoding = 'ascii')
 def test_encode_keys_random(delimiter, highest_character, key_prefix:list_of(str)):
-    kp = tuple(k.encode('ascii').replace(delimiter, b'').replace(highest_character, b'') for k in key_prefix)
+    kp = tuple(k.replace(delimiter, '').replace(highest_character, '').encode('ascii') for k in key_prefix)
+    d = delimiter.encode('ascii')
+    h = highest_character.encode('ascii')
     keys = _encode_keys(d, h, kp)
     assert set(keys) == {'key_from', 'key_to'}
     assert isinstance(keys, dict)
