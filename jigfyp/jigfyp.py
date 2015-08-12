@@ -62,7 +62,9 @@ class Jigfyp:
         '''
 
 def _encode_keys(delimiter, highest_character, key):
-    if len(key) > 0:
+    if len(delimiter) != 1 or len(highest_character) != 1:
+        raise ValueError('delimiter and highest_character must both have length 1.')
+    elif len(key) > 0:
         key_from = delimiter.join(key) + delimiter
         key_to = key_from + highest_character
     else:
