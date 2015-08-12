@@ -10,4 +10,4 @@ key_mapping = [
 def test_encode_keys_specific(key_prefix, keys):
     delimiter = b'!'
     highest_character = b'~'
-    assert _encode_keys(highest_character, delimiter, key_prefix) == keys
+    assert _encode_keys(delimiter, highest_character, key_prefix) == keys
