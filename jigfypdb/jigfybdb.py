@@ -1,12 +1,12 @@
-class JigFypDB:
-    def __init__(self, db):
-        '''
-        :param leveldb.LevelDB db: The levelDB instance to query...'
-        '''
-
-
 def put(db, key, value):
-    pass
+    '''
+    Save a value to the level database.
+
+    :param leveldb.LevelDB db: The levelDB instance to query...'
+    :type key: tuple of bytes
+    :param key: The key
+    :param bytes value: The value
+    '''
 
 def read_one(db, key):
     pass
