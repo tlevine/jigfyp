@@ -14,16 +14,17 @@ def test_encode_keys_specific(key_prefix, keys):
     assert _encode_keys(delimiter, highest_character, key_prefix) == keys
 
 @pytest.mark.randomize(delimiter = str, highest_character = str, 
-                       key_prefix = list_of(str),
+                       key_prefix = list_of(str), validate = int,
+                       min_num = 0, max_num = 1,
                        max_length = 5, # So errors are easy to read
                        ncalls = 3, encoding = 'ascii')
-def test_encode_keys_random(delimiter, highest_character, key_prefix):
+def test_encode_keys_random(delimiter, highest_character, key_prefix, validate):
     kp = tuple(x.replace(delimiter, '').replace(highest_character, '').encode('ascii') for x in key_prefix)
 
     d = delimiter.encode('ascii')
     h = highest_character.encode('ascii')
     if len(d) == 1 and len(h) == 1:
-        keys = _encode_keys(d, h, kp)
+        keys = _encode_keys(d, h, kp, validate = validate)
         assert set(keys) == {'key_from', 'key_to'}
         assert isinstance(keys, dict)
         if len(key_prefix) == 0:
@@ -36,6 +37,8 @@ def test_encode_keys_random(delimiter, highest_character, key_prefix):
                 assert keys[name].count(d) == len(key_prefix)
 
             assert len(keys['key_from']) + 1 == len(keys['key_to'])
-    else:
+    elif validate:
         with pytest.raises(ValueError):
-            _encode_keys(d, h, kp)
+            _encode_keys(d, h, kp, validate = validate)
+    else:
+        1/0
