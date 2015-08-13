@@ -1,7 +1,7 @@
 import leveldb
 
 class Jigfyp:
-    def __init__(self, db, delimiter = b'!', highest_character = b'~')
+    def __init__(self, db, delimiter = b'!', highest_character = b'~'):
         self.db = db
         for name in ['delimiter', 'highest_character']:
             if not isinstance(locals()[name], bytes):
