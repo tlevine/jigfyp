@@ -2,6 +2,13 @@ import leveldb
 
 class Jigfyp:
     def __init__(self, db, delimiter = b'!', highest_character = b'~'):
+        '''
+        Query your level database with tuples!
+
+        :param leveldb.LevelDB db: The levelDB instance to query
+        :param bytes delimiter: Character to delimit tuple elements in the keys
+        :param bytes highest_character: Character for specifying the end of ranges
+        '''
         self.db = db
         for name in ['delimiter', 'highest_character']:
             if not isinstance(locals()[name], bytes):
@@ -14,7 +21,6 @@ class Jigfyp:
         '''
         Save a record to the level database.
 
-        :param leveldb.LevelDB db: The levelDB instance to query...'
         :type key: tuple of bytes
         :param key: The key
         :param bytes value: The value
@@ -25,7 +31,6 @@ class Jigfyp:
         '''
         Save a record to the level database.
 
-        :param leveldb.LevelDB db: The levelDB instance to query...'
         :type key: tuple of bytes
         :param key: The key
         :param bytes value: The value
@@ -38,7 +43,6 @@ class Jigfyp:
         '''
         Read one record from the level database.
 
-        :param leveldb.LevelDB db: The levelDB instance to query...'
         :type key: tuple of bytes
         :param key: The key
         :rtype: tuple containing two bytes elements
@@ -51,7 +55,6 @@ class Jigfyp:
         Read several records from the level database. All records whose keys
         begin with the particular prefix are returned.
 
-        :param leveldb.LevelDB db: The levelDB instance to query...'
         :type key_prefix: tuple of bytes
         :param key_prefix: A left-aligned subset of the key values.
         :rtype: iterable of tuples, each containing two bytes elements
@@ -65,7 +68,6 @@ class Jigfyp:
         '''
         Delete one record from the level database.
 
-        :param leveldb.LevelDB db: The levelDB instance to query...'
         :type key: tuple of bytes
         :param key: The key
         :rtype: None
@@ -76,7 +78,6 @@ class Jigfyp:
         '''
         Delete several records from the level database.
 
-        :param leveldb.LevelDB db: The levelDB instance to query...'
         :type key_prefix: tuple of bytes
         :param key_prefix: A left-aligned subset of the key values.
         :rtype: None
