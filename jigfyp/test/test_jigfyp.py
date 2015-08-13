@@ -3,7 +3,7 @@ from itertools import product
 import pytest
 from pytest import list_of
 
-from ..jigfyp import _encode_keys, Jigfyp
+from ..jigfyp import _encode_keys, Jigfyp, _decode_key
 
 key_mapping = [
     ((b'abc', b'def'), {'key_from': b'abc!def!', 'key_to': b'abc!def!~'}),
@@ -36,3 +36,10 @@ def test_encode_keys_random(delimiter, highest_character, key_prefix:list_of(str
             assert keys[name].count(d) == len(key_prefix)
 
         assert len(keys['key_from']) + 1 == len(keys['key_to'])
+
+decodings = [
+    (b'!', b'ab!cd!efg!', (b'ab', b'cd', b'efg')),
+]
+@pytest.mark.parametrize('delimiter, encoded, decoded', decodings)
+def test_decode_key(delimiter, encoded, decoded):
+    assert _decode_key(delimiter, encoded) == decoded
