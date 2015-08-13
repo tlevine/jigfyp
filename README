@@ -1,4 +1,46 @@
 Jigfyp is a query-builder for leveldb.
 It lets you specify leveldb ranges as tuples of strings.
 
+Initializing
+---------------
+Initalize a Jigfyp with a LevelDB object. ::
 
+    import leveldb, Jigfyp
+
+    db = leveldb.LevelDB()
+    j = jigfyp.Jigfyp(db)
+
+Working with individual keys
+-------------------------------
+The key in these examples is ``b'one!two!three'``. ::
+
+    j.put_one((b'one', b'two', b'three'), b'Hi')
+    j.get_one((b'one', b'two', b'three'))
+    j.delete_one((b'one', b'two', b'three'))
+
+Working with ranges of keys
+-------------------------------
+Here's one way of adding a few records. ::
+
+    j.put_one((b'one', b'two', b'three'), b'Hi')
+    j.put_one((b'one', b'two', b'four'), b'Hi')
+    j.put_one((b'one', b'two', b'seven), b'Hi')
+    j.put_one((b'over', b'nine', b'thousand'), b'Hi')
+
+If you're writing several records, you can use the ``put_many`` method to save
+the same data but with a ``leveldb.WriteBatch``, which is usually faster. ::
+
+    records = [
+        ((b'one', b'two', b'three'), b'Hi'),
+        ((b'one', b'two', b'four'), b'Hi'),
+        ((b'one', b'two', b'seven), b'Hi'),
+        ((b'over', b'nine', b'thousand'), b'Hi'),
+    ]
+    j.put_many(records)
+
+The 
+
+The key in these examples is ``b'one!two!three'``. ::
+
+    j.get_one((b'one', b'two', b'three'))
+    j.delete_one((b'one', b'two', b'three'))
