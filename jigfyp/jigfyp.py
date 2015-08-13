@@ -99,4 +99,4 @@ def _encode_keys(delimiter, highest_character, key):
     }
 
 def _decode_key(delimiter, x):
-    return 
+    return tuple(x.split(delimiter))

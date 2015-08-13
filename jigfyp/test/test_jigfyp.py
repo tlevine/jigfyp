@@ -6,7 +6,7 @@ from pytest import list_of
 from ..jigfyp import _encode_keys, Jigfyp, _decode_key
 
 key_mapping = [
-    ((b'abc', b'def'), {'key_from': b'abc!def!', 'key_to': b'abc!def!~'}),
+    ((b'abc', b'def'), {'key_from': b'abc!def', 'key_to': b'abc!def~'}),
 ]
 
 @pytest.mark.parametrize('key_prefix, keys', key_mapping)
@@ -38,7 +38,7 @@ def test_encode_keys_random(delimiter, highest_character, key_prefix:list_of(str
         assert len(keys['key_from']) + 1 == len(keys['key_to'])
 
 decodings = [
-    (b'!', b'ab!cd!efg!', (b'ab', b'cd', b'efg')),
+    (b'!', b'ab!cd!efg', (b'ab', b'cd', b'efg')),
 ]
 @pytest.mark.parametrize('delimiter, encoded, decoded', decodings)
 def test_decode_key(delimiter, encoded, decoded):
