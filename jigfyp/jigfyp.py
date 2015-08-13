@@ -73,6 +73,7 @@ class Jigfyp:
         :rtype: None
         :returns: Nothing
         '''
+        db.Delete(_encode_key(key))
 
     def delete_many(db, key_prefix):
         '''
@@ -83,6 +84,9 @@ class Jigfyp:
         :rtype: None
         :returns: Nothing
         '''
+        keys = _encode_keys(self.delimiter, self.highest_character, key_prefix)
+        for key, value in db.RangeIter(**keys):
+            db.Delete(_encode_key(key))
 
 def _encode_key(delimiter, key):
     return delimiter.join(key)
