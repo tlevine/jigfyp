@@ -84,7 +84,7 @@ class Jigfyp:
         '''
 
 def _encode_key(delimiter, key):
-    return delimiter.join(key) + delimiter
+    return delimiter.join(key)
 
 def _encode_keys(delimiter, highest_character, key):
     if len(key) > 0:

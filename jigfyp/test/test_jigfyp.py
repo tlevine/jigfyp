@@ -30,10 +30,9 @@ def test_encode_keys_random(delimiter, highest_character, key_prefix:list_of(str
         for name in ['key_from', 'key_to']:
             assert keys[name] == None
     else:
-        assert keys['key_from'].endswith(d)
-        assert keys['key_to'].endswith(d + h)
+        assert keys['key_to'].endswith(h)
         for name in ['key_from', 'key_to']:
-            assert keys[name].count(d) == len(key_prefix)
+            assert keys[name].count(d) == len(key_prefix) - 1
 
         assert len(keys['key_from']) + 1 == len(keys['key_to'])
 
