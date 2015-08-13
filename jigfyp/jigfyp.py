@@ -50,7 +50,7 @@ class Jigfyp:
         '''
         return db.Get(_encode_key(self.delimiter, key))
 
-    def get_many(db, key_prefix):
+    def get_many(db, *key_prefix):
         '''
         Read several records from the level database. All records whose keys
         begin with the particular prefix are returned.
@@ -75,7 +75,7 @@ class Jigfyp:
         '''
         db.Delete(_encode_key(key))
 
-    def delete_many(db, key_prefix):
+    def delete_many(db, *key_prefix):
         '''
         Delete several records from the level database.
 
